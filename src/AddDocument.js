@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 function AddDocument(props){
 
@@ -7,22 +7,43 @@ function AddDocument(props){
     buttonDisabled = false;
   }
 
- let newDocName = "Lisa's passport";
- let newDocExpiryDate = "2025-01-01";
+
+  const[newDocName, setNewDocName] = useState('');
+  const[newDocExpiryDate, setNewDocExpiryDate] = useState('');
+
+
+  const handleChange = (e) => {
+
+    const  {name, value} = e.target;
+    console.log(name);
+    console.log(value);
+    switch(name){
+      case "docName":
+        setNewDocName(value);
+        break;
+      case "docExpiryDate"  :
+        setNewDocExpiryDate(value);
+        break;
+      default:
+    }
+
+    //  console.log(editedDocs)
+  };
 
   return(
     <div>
-    <h4>Add new document</h4>
+    <h4>Add a document</h4>
+     <div className="doc-row">
+    <input className="doc-text" type="text" name="docName" placeholder="Enter document name" value={newDocName}
+    onChange={(e)=>handleChange(e)}/>
 
-    <input type="text" name="docType" placeholder="Enter document name" value={newDocName}
-    />
-
-    <input type="date" name="docExpiryDate" value={newDocExpiryDate}/>
-
+    <input className="doc-date" type="date" name="docExpiryDate" value={newDocExpiryDate}
+    onChange={(e)=>handleChange(e)}/>
+     </div>
     <button type="submit"  onClick={()=>props.save(newDocName,newDocExpiryDate)}>
     Save
     </button>
-    <button type="reset">Discard</button>
+
 
     </div>
   )
